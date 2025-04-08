@@ -401,6 +401,9 @@ function readAloud(text) {
         controlsContainer.style.display = "block";
     }
 
+    // Store the original text for highlighting
+    const originalText = text;
+
     // Create a new utterance
     currentUtterance = new SpeechSynthesisUtterance(text);
 
@@ -437,6 +440,39 @@ function readAloud(text) {
     console.log(`Text split into ${words.length} words for highlighting`);
     let wordIndex = 0;
 
+    // Keep track of the current position in the text
+    let currentPosition = 0;
+
+    // Create a map of word positions for faster lookup
+    const wordPositions = [];
+    let pos = 0;
+    const textLower = originalText.toLowerCase();
+
+    // Pre-compute word positions for more accurate highlighting
+    for (let i = 0; i < words.length; i++) {
+        const word = words[i]
+            .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "")
+            .trim()
+            .toLowerCase();
+        if (word === "") continue;
+
+        // Find the position of this word after the current position
+        const wordPos = textLower.indexOf(word, pos);
+        if (wordPos !== -1) {
+            wordPositions.push({
+                word: word,
+                position: wordPos,
+                length: word.length,
+            });
+            // Move past this word for the next search
+            pos = wordPos + word.length;
+        }
+    }
+
+    console.log(
+        `Mapped ${wordPositions.length} word positions for highlighting`
+    );
+
     // Handle word boundaries for highlighting
     currentUtterance.onboundary = (event) => {
         if (event.name === "word") {
@@ -446,13 +482,34 @@ function readAloud(text) {
                 clearHighlights();
 
                 // Get the current word
-                const currentWord = words[wordIndex];
+                const currentWord = words[wordIndex]
+                    .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "")
+                    .trim();
                 console.log(
                     `Processing word boundary: "${currentWord}" (${wordIndex}/${words.length})`
                 );
 
-                // Highlight current word
-                highlightWord(currentWord);
+                // Find the position of this word in our pre-computed map
+                if (wordIndex < wordPositions.length) {
+                    const wordInfo = wordPositions[wordIndex];
+                    // Highlight the word at the specific position
+                    highlightWordAtPosition(
+                        currentWord,
+                        wordInfo.position,
+                        wordInfo.length
+                    );
+                } else {
+                    // Fallback to the regular highlighting if we don't have position info
+                    highlightWord(currentWord, currentPosition);
+                    // Update the current position to search after this word next time
+                    const wordPos = textLower.indexOf(
+                        currentWord.toLowerCase(),
+                        currentPosition
+                    );
+                    if (wordPos !== -1) {
+                        currentPosition = wordPos + currentWord.length;
+                    }
+                }
 
                 // Increment word index
                 wordIndex++;
@@ -509,8 +566,8 @@ function readAloud(text) {
     }
 }
 
-// Highlight a word in the reader content
-function highlightWord(word) {
+// Highlight a word in the reader content starting from a specific position
+function highlightWord(word, startPosition = 0) {
     if (!word) return;
 
     // Clean the word from any punctuation for better matching
@@ -534,7 +591,108 @@ function highlightWord(word) {
         textNodes.push(node);
     }
 
-    // Search for the word in each text node
+    // Keep track of the character position in the overall text
+    let charPosition = 0;
+    let foundNode = null;
+    let foundIndex = -1;
+
+    // First, find the node and position that contains the character at startPosition
+    for (const node of textNodes) {
+        const nodeLength = node.nodeValue.length;
+
+        // If this node contains the target position
+        if (
+            charPosition <= startPosition &&
+            startPosition < charPosition + nodeLength
+        ) {
+            foundNode = node;
+            foundIndex = startPosition - charPosition;
+            break;
+        }
+
+        charPosition += nodeLength;
+    }
+
+    // If we found the node containing the start position, start searching from there
+    if (foundNode) {
+        // Start from the found node
+        let nodeIndex = textNodes.indexOf(foundNode);
+        let searchStartIndex = foundIndex;
+
+        for (let i = nodeIndex; i < textNodes.length; i++) {
+            const node = textNodes[i];
+            const text = node.nodeValue;
+
+            // For the first node, start from the found index
+            const startIdx = i === nodeIndex ? searchStartIndex : 0;
+
+            // Try exact match first
+            let wordRegex = new RegExp(`\\b${cleanWord}\\b`, "i");
+            let match = null;
+
+            // Use exec with lastIndex to start from the correct position
+            wordRegex.lastIndex = startIdx;
+            match = wordRegex.exec(text.slice(startIdx));
+
+            // Adjust match index if found
+            if (match) {
+                match.index += startIdx;
+            }
+
+            // If no exact match, try a more flexible match
+            if (!match) {
+                wordRegex = new RegExp(`${cleanWord}`, "i");
+                wordRegex.lastIndex = startIdx;
+                match = wordRegex.exec(text.slice(startIdx));
+
+                // Adjust match index if found
+                if (match) {
+                    match.index += startIdx;
+                }
+            }
+
+            if (match) {
+                try {
+                    // Create a range for the matched word
+                    const range = document.createRange();
+                    range.setStart(node, match.index);
+                    range.setEnd(node, match.index + match[0].length);
+
+                    // Create a highlight span
+                    const highlight = document.createElement("span");
+                    highlight.className = "tts-highlight";
+
+                    // Wrap the range with the highlight span
+                    range.surroundContents(highlight);
+
+                    // Store the highlighted element
+                    highlightedElements.push(highlight);
+
+                    // Log successful highlighting
+                    console.log(
+                        `Highlighted word: "${match[0]}" at position ${
+                            charPosition + match.index
+                        }`
+                    );
+
+                    // Only highlight the first occurrence after the start position
+                    return;
+                } catch (error) {
+                    console.error("Error highlighting word:", error);
+                    // Continue to the next node if there's an error
+                    continue;
+                }
+            }
+
+            // Update character position for the next node
+            charPosition += text.length;
+        }
+    }
+
+    // Fallback to the old method if we couldn't find the word at the specified position
+    console.log(`Falling back to basic highlighting for word: "${cleanWord}"`);
+
+    // Search for the word in each text node (original implementation)
     for (const node of textNodes) {
         const text = node.nodeValue;
 
@@ -566,7 +724,9 @@ function highlightWord(word) {
                 highlightedElements.push(highlight);
 
                 // Log successful highlighting
-                console.log(`Highlighted word: "${match[0]}"`);
+                console.log(
+                    `Highlighted word: "${match[0]}" (fallback method)`
+                );
 
                 // Only highlight the first occurrence
                 break;
@@ -577,6 +737,81 @@ function highlightWord(word) {
             }
         }
     }
+}
+
+// Highlight a word at a specific position in the text
+function highlightWordAtPosition(word, position, length) {
+    if (!word || position < 0 || length <= 0) return;
+
+    const content = document.getElementById("reader-article");
+    if (!content) return;
+
+    // Find all text nodes in the content
+    const textNodes = [];
+    const walker = document.createTreeWalker(
+        content,
+        NodeFilter.SHOW_TEXT,
+        null,
+        false
+    );
+
+    let node;
+    while ((node = walker.nextNode())) {
+        textNodes.push(node);
+    }
+
+    // Keep track of the character position in the overall text
+    let charPosition = 0;
+
+    // Find the node and position that contains the character at 'position'
+    for (const node of textNodes) {
+        const nodeLength = node.nodeValue.length;
+
+        // If this node contains the target position
+        if (charPosition <= position && position < charPosition + nodeLength) {
+            try {
+                // Calculate the start and end positions within this node
+                const startOffset = position - charPosition;
+                let endOffset = startOffset + length;
+
+                // Make sure endOffset doesn't exceed the node length
+                endOffset = Math.min(endOffset, nodeLength);
+
+                // Create a range for the word at the specific position
+                const range = document.createRange();
+                range.setStart(node, startOffset);
+                range.setEnd(node, endOffset);
+
+                // Create a highlight span
+                const highlight = document.createElement("span");
+                highlight.className = "tts-highlight";
+
+                // Wrap the range with the highlight span
+                range.surroundContents(highlight);
+
+                // Store the highlighted element
+                highlightedElements.push(highlight);
+
+                console.log(
+                    `Highlighted word at exact position: ${position}, length: ${length}`
+                );
+                return;
+            } catch (error) {
+                console.error("Error highlighting word at position:", error);
+                // Fall back to the regular highlighting method
+                highlightWord(word, position);
+                return;
+            }
+        }
+
+        charPosition += nodeLength;
+    }
+
+    // If we couldn't find the exact position, fall back to the regular method
+    console.log(
+        `Couldn't find exact position ${position}, falling back to regular highlighting`
+    );
+    highlightWord(word, position);
 }
 
 // Clear all word highlights
