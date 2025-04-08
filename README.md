@@ -1,16 +1,44 @@
-# Reader Mode Browser Extension
+# 📘 Reader Mode Browser Extension
 
-A lightweight browser extension that enables a distraction-free, reader-friendly view of any webpage. It supports Chrome, Edge, Firefox, and other modern browsers that support Manifest V3.
+A lightweight browser extension that enables a distraction-free, reader-friendly view of any webpage with text-to-speech capabilities. It supports Chrome, Edge, Firefox, and other modern browsers that support Manifest V3.
 
-## Features
+![Reader Mode Banner](extension/icons/icon128.png)
+
+## ✨ Description
+
+Reader Mode is a browser extension designed to transform cluttered web pages into clean, distraction-free reading experiences. It removes ads, sidebars, popups, and other distracting elements, allowing you to focus solely on the content that matters.
+
+The extension also includes a powerful text-to-speech feature with word highlighting, adjustable speed, and customizable voices, making web content more accessible and convenient to consume.
+
+## 🚀 Live Demo
+
+Visit our [GitHub Pages website](https://chirag127.github.io/Reader-Mode-Browser-Extension/) to learn more about the extension and see it in action.
+
+## 🛠️ Tech Stack / Tools Used
+
+-   HTML5, CSS3, JavaScript (Vanilla)
+-   Chrome Extension API
+-   Firefox WebExtension API
+-   Manifest V3
+-   Mozilla's Readability.js
+-   Web Speech API
+
+## 🧪 Features
 
 -   **Clean Reading UI**: Displays only main content (title, article text, images)
 -   **Light/Dark Mode**: Toggle between light and dark themes
 -   **Font Customization**: Adjustable font family and size for better readability
 -   **Page Navigation**: Preserves links within content
 -   **Back to Original**: Button to return to the original webpage
+-   **Text-to-Speech**: Read aloud content with word highlighting
+-   **Adjustable Speed**: Customize reading speed up to 4x
+-   **Floating Control Bar**: Easy access to play, pause, and settings controls
+-   **Read from Selection**: Start reading from any selected text on the page
+-   **Context Menu Integration**: Right-click on selected text to start reading
+-   **Smart Scrolling**: Automatically scrolls to keep the current text in view
+-   **Customizable Voice**: Choose from available system voices and adjust pitch
 
-## Installation
+## 💾 Installation Instructions
 
 ### Chrome / Edge
 
@@ -28,7 +56,9 @@ A lightweight browser extension that enables a distraction-free, reader-friendly
 4. Select any file in the `extension` folder from this repository
 5. The Reader Mode extension should now appear in your browser toolbar
 
-## Usage
+## 🔧 Usage
+
+### Basic Usage
 
 1. Navigate to any article or content-heavy webpage
 2. Click the Reader Mode icon in your browser toolbar or click the "Enable Reader Mode" button in the popup
@@ -38,11 +68,28 @@ A lightweight browser extension that enables a distraction-free, reader-friendly
     - Change font family and size
     - Return to the original page
 
-## How It Works
+### Text-to-Speech Feature
+
+1. Click the speaker icon in the reader controls to start reading the article
+2. Use the floating control bar to:
+    - Play/Pause: Control the reading playback
+    - Stop: Stop reading completely
+    - Speed: Adjust the reading speed from 0.5x to 4x
+    - Voice: Select from available system voices
+    - Pitch: Adjust the pitch of the voice
+3. Alternatively, select any text and right-click to choose "Read selection aloud"
+
+## 🧠 How It Works
 
 The extension uses Mozilla's Readability.js algorithm to identify and extract the main content of a webpage, removing distractions like ads, sidebars, and navigation elements. It then presents this content in a clean, customizable format optimized for reading.
 
-## Development
+## 📸 Screenshots
+
+![Reader Mode Light Theme](https://via.placeholder.com/800x450.png?text=Reader+Mode+Light+Theme)
+![Reader Mode Dark Theme](https://via.placeholder.com/800x450.png?text=Reader+Mode+Dark+Theme)
+![Text-to-Speech Feature](https://via.placeholder.com/800x450.png?text=Text-to-Speech+Feature)
+
+## 💻 Development
 
 ### Project Structure
 
@@ -81,7 +128,7 @@ A test page is provided in the `test` directory to help verify the extension's f
 
 This extension is built with vanilla JavaScript, HTML, and CSS, so no build step is required. Simply make your changes to the source files.
 
-## Browser Compatibility
+## 📱 Browser Compatibility
 
 The extension is designed to work with:
 
@@ -89,17 +136,31 @@ The extension is designed to work with:
 -   Microsoft Edge (v88+)
 -   Mozilla Firefox (v109+)
 
-## Future Enhancements
+## 💡 Future Enhancements
 
 Potential future enhancements include:
 
-1. **Text-to-Speech**: Read aloud content using Web Speech API
-2. **Reading List**: Save content for offline reading
-3. **Scroll Progress Indicator**: Show reading progress
-4. **Highlighting & Notes**: Allow users to highlight text and take notes
-5. **Custom Themes**: Additional theme options beyond light/dark
+1. **Reading List**: Save content for offline reading
+2. **Scroll Progress Indicator**: Show reading progress
+3. **Highlighting & Notes**: Allow users to highlight text and take notes
+4. **Custom Themes**: Additional theme options beyond light/dark
+5. **Translation**: Integrate with translation services to read content in different languages
+6. **Voice Commands**: Control the reader mode using voice commands
 
-## License
+## 👋 Contributing
+
+Contributions are welcome! Here's how you can contribute:
+
+1. Fork the repository
+2. Create a new branch (`git checkout -b feature/amazing-feature`)
+3. Make your changes
+4. Commit your changes (`git commit -m 'Add some amazing feature'`)
+5. Push to the branch (`git push origin feature/amazing-feature`)
+6. Open a Pull Request
+
+Please make sure to update tests as appropriate and adhere to the existing coding style.
+
+## 🌟 License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 

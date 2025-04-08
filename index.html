@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reader Mode - Distraction-Free Reading Experience</title>
+    <link rel="icon" href="extension/icons/icon16.png" type="image/png">
+    <style>
+        :root {
+            /* Color variables */
+            --bg-primary: #121212;
+            --bg-secondary: #1e1e1e;
+            --bg-tertiary: #2d2d2d;
+            --text-primary: #e0e0e0;
+            --text-secondary: #b0b0b0;
+            --accent-primary: #1a73e8;
+            --accent-secondary: #90caf9;
+            --border-color: #444444;
+            
+            /* Spacing variables */
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 2rem;
+            --spacing-lg: 3rem;
+            --spacing-xl: 5rem;
+            
+            /* Font variables */
+            --font-primary: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            --font-size-sm: 0.875rem;
+            --font-size-md: 1rem;
+            --font-size-lg: 1.25rem;
+            --font-size-xl: 1.5rem;
+            --font-size-xxl: 2.5rem;
+            
+            /* Border radius */
+            --border-radius-sm: 4px;
+            --border-radius-md: 8px;
+            --border-radius-lg: 12px;
+            
+            /* Transitions */
+            --transition-fast: 0.2s ease;
+            --transition-normal: 0.3s ease;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: var(--font-primary);
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        a {
+            color: var(--accent-secondary);
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+        
+        a:hover {
+            color: var(--accent-primary);
+            text-decoration: underline;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+        
+        /* Header styles */
+        header {
+            background-color: var(--bg-secondary);
+            padding: var(--spacing-md) 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+        
+        .header-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: var(--spacing-lg) 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .logo img {
+            width: 64px;
+            height: 64px;
+            margin-right: var(--spacing-sm);
+        }
+        
+        .logo h1 {
+            font-size: var(--font-size-xxl);
+            margin: 0;
+        }
+        
+        .tagline {
+            font-size: var(--font-size-lg);
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-md);
+            max-width: 600px;
+        }
+        
+        .header-buttons {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-md);
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: var(--spacing-sm) var(--spacing-md);
+            background-color: var(--accent-primary);
+            color: white;
+            border-radius: var(--border-radius-md);
+            font-weight: 600;
+            transition: all var(--transition-normal);
+            border: none;
+            cursor: pointer;
+            text-align: center;
+        }
+        
+        .btn:hover {
+            background-color: var(--accent-secondary);
+            transform: translateY(-2px);
+            text-decoration: none;
+            color: var(--bg-primary);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--accent-primary);
+            color: var(--accent-primary);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--accent-primary);
+            color: white;
+        }
+        
+        /* Section styles */
+        section {
+            padding: var(--spacing-xl) 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        section:last-child {
+            border-bottom: none;
+        }
+        
+        .section-title {
+            font-size: var(--font-size-xl);
+            margin-bottom: var(--spacing-md);
+            text-align: center;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background-color: var(--accent-primary);
+            margin: var(--spacing-sm) auto 0;
+        }
+        
+        .section-content {
+            margin-top: var(--spacing-md);
+        }
+        
+        /* Features section */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-lg);
+        }
+        
+        .feature-card {
+            background-color: var(--bg-tertiary);
+            border-radius: var(--border-radius-md);
+            padding: var(--spacing-md);
+            transition: transform var(--transition-normal);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: var(--spacing-sm);
+            color: var(--accent-primary);
+        }
+        
+        .feature-title {
+            font-size: var(--font-size-lg);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .feature-description {
+            color: var(--text-secondary);
+            flex-grow: 1;
+        }
+        
+        /* Installation section */
+        .installation-steps {
+            background-color: var(--bg-tertiary);
+            border-radius: var(--border-radius-md);
+            padding: var(--spacing-md);
+            margin-top: var(--spacing-md);
+        }
+        
+        .step {
+            margin-bottom: var(--spacing-md);
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .step:last-child {
+            margin-bottom: 0;
+        }
+        
+        .step-number {
+            background-color: var(--accent-primary);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: var(--spacing-sm);
+            flex-shrink: 0;
+        }
+        
+        .step-content {
+            flex-grow: 1;
+        }
+        
+        .step-title {
+            font-size: var(--font-size-lg);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .step-description {
+            color: var(--text-secondary);
+        }
+        
+        /* How to use section */
+        .usage-container {
+            background-color: var(--bg-tertiary);
+            border-radius: var(--border-radius-md);
+            padding: var(--spacing-md);
+            margin-top: var(--spacing-md);
+        }
+        
+        /* Tech stack section */
+        .tech-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-md);
+            justify-content: center;
+        }
+        
+        .tech-item {
+            background-color: var(--bg-tertiary);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--border-radius-sm);
+            font-size: var(--font-size-sm);
+        }
+        
+        /* Footer styles */
+        footer {
+            background-color: var(--bg-secondary);
+            padding: var(--spacing-lg) 0;
+            text-align: center;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+            flex-wrap: wrap;
+        }
+        
+        .copyright {
+            color: var(--text-secondary);
+            font-size: var(--font-size-sm);
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .header-buttons {
+                flex-direction: column;
+                gap: var(--spacing-sm);
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .section-title {
+                font-size: var(--font-size-lg);
+            }
+            
+            .logo h1 {
+                font-size: var(--font-size-xl);
+            }
+            
+            .tagline {
+                font-size: var(--font-size-md);
+            }
+        }
+        
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease forwards;
+        }
+        
+        .delay-1 {
+            animation-delay: 0.2s;
+        }
+        
+        .delay-2 {
+            animation-delay: 0.4s;
+        }
+        
+        .delay-3 {
+            animation-delay: 0.6s;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo animate-fade-in">
+                    <img src="extension/icons/icon128.png" alt="Reader Mode Logo">
+                    <h1>Reader Mode</h1>
+                </div>
+                <p class="tagline animate-fade-in delay-1">A lightweight browser extension that enables a distraction-free, reader-friendly view of any webpage.</p>
+                <div class="header-buttons animate-fade-in delay-2">
+                    <a href="https://github.com/chirag127/Reader-Mode-Browser-Extension" class="btn" target="_blank">GitHub Repository</a>
+                    <a href="privacy-policy.html" class="btn btn-outline" target="_blank">Privacy Policy</a>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <main>
+        <section id="about" class="animate-fade-in delay-3">
+            <div class="container">
+                <h2 class="section-title">About</h2>
+                <div class="section-content">
+                    <p>Reader Mode is a browser extension designed to transform cluttered web pages into clean, distraction-free reading experiences. It removes ads, sidebars, popups, and other distracting elements, allowing you to focus solely on the content that matters.</p>
+                    <p>Whether you're reading articles, blog posts, or documentation, Reader Mode enhances your reading experience with customizable fonts, themes, and text-to-speech capabilities.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="features">
+            <div class="container">
+                <h2 class="section-title">Features</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">📄</div>
+                        <h3 class="feature-title">Clean Reading UI</h3>
+                        <p class="feature-description">Displays only main content (title, article text, images) in a clean, readable format.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🌓</div>
+                        <h3 class="feature-title">Light/Dark Mode</h3>
+                        <p class="feature-description">Toggle between light and dark themes to suit your reading preference and reduce eye strain.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔤</div>
+                        <h3 class="feature-title">Font Customization</h3>
+                        <p class="feature-description">Adjustable font family and size for better readability and personalization.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔊</div>
+                        <h3 class="feature-title">Text-to-Speech</h3>
+                        <p class="feature-description">Listen to articles with word highlighting, adjustable speed, and customizable voices.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔄</div>
+                        <h3 class="feature-title">One-Click Toggle</h3>
+                        <p class="feature-description">Easily switch between reader mode and the original page with a single click.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📱</div>
+                        <h3 class="feature-title">Responsive Design</h3>
+                        <p class="feature-description">Optimized for all screen sizes, from mobile devices to large desktop monitors.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="installation">
+            <div class="container">
+                <h2 class="section-title">Installation</h2>
+                <div class="installation-steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3 class="step-title">Download the Extension</h3>
+                            <p class="step-description">Clone or download the repository from <a href="https://github.com/chirag127/Reader-Mode-Browser-Extension" target="_blank">GitHub</a>.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3 class="step-title">Open Extensions Page</h3>
+                            <p class="step-description">Navigate to your browser's extensions page:</p>
+                            <ul>
+                                <li>Chrome: chrome://extensions/</li>
+                                <li>Edge: edge://extensions/</li>
+                                <li>Firefox: about:debugging#/runtime/this-firefox</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3 class="step-title">Enable Developer Mode</h3>
+                            <p class="step-description">Turn on "Developer mode" in the top-right corner (Chrome/Edge) or click "Load Temporary Add-on" (Firefox).</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h3 class="step-title">Load the Extension</h3>
+                            <p class="step-description">Click "Load unpacked" and select the extension folder from the downloaded repository.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <h3 class="step-title">Pin the Extension</h3>
+                            <p class="step-description">Click the extensions icon in your browser toolbar and pin Reader Mode for easy access.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="usage">
+            <div class="container">
+                <h2 class="section-title">How to Use</h2>
+                <div class="usage-container">
+                    <h3>Basic Usage</h3>
+                    <ol>
+                        <li>Navigate to any article or content-heavy webpage</li>
+                        <li>Click the Reader Mode icon in your browser toolbar</li>
+                        <li>The page will be transformed into a clean, reader-friendly format</li>
+                        <li>Use the controls at the top to customize your reading experience:
+                            <ul>
+                                <li>Toggle between light and dark mode</li>
+                                <li>Change font family and size</li>
+                                <li>Return to the original page</li>
+                            </ul>
+                        </li>
+                    </ol>
+                    
+                    <h3>Text-to-Speech Feature</h3>
+                    <ol>
+                        <li>Click the speaker icon in the reader controls to start reading the article</li>
+                        <li>Use the floating control bar to:
+                            <ul>
+                                <li>Play/Pause: Control the reading playback</li>
+                                <li>Stop: Stop reading completely</li>
+                                <li>Speed: Adjust the reading speed from 0.5x to 4x</li>
+                                <li>Voice: Select from available system voices</li>
+                                <li>Pitch: Adjust the pitch of the voice</li>
+                            </ul>
+                        </li>
+                        <li>Alternatively, select any text and right-click to choose "Read selection aloud"</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+        
+        <section id="tech-stack">
+            <div class="container">
+                <h2 class="section-title">Technology Stack</h2>
+                <p>Reader Mode is built using modern web technologies to ensure performance, accessibility, and compatibility across browsers.</p>
+                <div class="tech-list">
+                    <span class="tech-item">HTML5</span>
+                    <span class="tech-item">CSS3</span>
+                    <span class="tech-item">JavaScript</span>
+                    <span class="tech-item">Chrome Extension API</span>
+                    <span class="tech-item">Firefox WebExtension API</span>
+                    <span class="tech-item">Manifest V3</span>
+                    <span class="tech-item">Readability.js</span>
+                    <span class="tech-item">Web Speech API</span>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="https://github.com/chirag127/Reader-Mode-Browser-Extension" target="_blank">GitHub Repository</a>
+                <a href="privacy-policy.html" target="_blank">Privacy Policy</a>
+            </div>
+            <p class="copyright">&copy; 2023 Reader Mode Browser Extension. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
