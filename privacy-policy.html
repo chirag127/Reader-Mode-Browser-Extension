@@ -365,14 +365,19 @@
                 <div class="section-content">
                     <p>The Reader Mode Browser Extension uses the following third-party services:</p>
                     <ul>
-                        <li><strong>Mozilla's Readability.js</strong>: We use this open-source library to extract and
-                            clean article content. This processing happens entirely within your browser.</li>
+                        <li><strong>Google Generative AI (Gemini 2.0 Flash Lite)</strong>: We use Google's AI model to
+                            extract and clean article content with superior accuracy. This involves sending webpage
+                            content to our backend server, which then communicates with Google's AI services. For
+                            information about Google's data practices, please see their <a
+                                href="https://ai.google.dev/privacy" target="_blank">AI Privacy Notice</a>.</li>
+                        <li><strong>Mozilla's Readability.js</strong>: We use this open-source library as a fallback
+                            extraction method. This processing happens entirely within your browser.</li>
                         <li><strong>Web Speech API</strong>: For the text-to-speech feature, we use your browser's
                             built-in Web Speech API. The processing of speech synthesis happens locally on your device.
                         </li>
                     </ul>
-                    <p>These services do not receive any data from our extension; all processing happens locally within
-                        your browser.</p>
+                    <p>You can disable the AI-powered extraction in the extension settings if you prefer to use only the
+                        local processing methods.</p>
                 </div>
             </div>
 
@@ -424,7 +429,7 @@
                 <a href="https://github.com/chirag127/Reader-Mode-Browser-Extension" target="_blank">GitHub
                     Repository</a>
             </div>
-            <p class="copyright">&copy; 2023 Reader Mode Browser Extension. All rights reserved.</p>
+            <p class="copyright">&copy; 2025 Reader Mode Browser Extension. All rights reserved.</p>
         </div>
     </footer>
 </body>

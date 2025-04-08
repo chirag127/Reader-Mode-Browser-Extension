@@ -1,133 +1,166 @@
+
 # 📄 Product Requirements Document (PRD)
 
-## Project Title: Reader Mode Browser Extension
-## Version: 1.0.0
-## Author: chirag singhal
-## Date: 2025-04-08
-
-## Overview
-
-Build a lightweight browser extension that enables a **distraction-free, reader-friendly view** of any webpage. It should support **Chrome, Edge, Firefox**, and ideally be extendable to other modern browsers supporting **Manifest V3**.
-
-## Goals
-- Present it in a **clean, readable layout** with adjustable typography and theme (light/dark).
-- Allow users to toggle Reader Mode from a toolbar icon.
+## 🧠 Project Title
+**Read Aloud: Intelligent Reader Mode with Word Highlighting**
 
 ---
 
-## 🧱 Tech Stack
-
-- **Frontend:**
-  - HTML, CSS, Vanilla JavaScript
-  - Browser Extension APIs (Manifest V3)
-
-- **Browsers Supported:**
-  - Chrome
-  - Microsoft Edge
-  - Firefox (ensure Manifest V3 compliance)
-
-- **Project Structure:**
-  ```
-  extension/
-  ├── icons/                   # Extension icons (16x16, 48x48, 128x128)
-  ├── reader/                  # Reader mode UI HTML/CSS/JS
-  │   ├── reader.html
-  │   ├── reader.css
-  │   └── reader.js
-  ├── content.js               # Injected into webpages to extract and clean article content
-  ├── background.js            # Manages toggle state, context menu, and tabs
-  ├── extension.js             # Helper functions for the extension
-  ├── manifest.json            # Manifest V3 file
-  └── popup.html               # Minimal popup for enabling reader mode
-  ```
+## 📝 Overview
+This project is a **cross-browser extension** (Chrome, Edge, Firefox) that reads web pages aloud using **Text-to-Speech (TTS)** and highlights words in real time as they are spoken. The extension enters a custom **Reader Mode** by extracting the main article text using **Gemini 2.0 Flash Lite**, ensuring a distraction-free reading experience. A floating control bar provides playback and customization options.
 
 ---
 
-## 🧩 Features
+## 🎯 Goals
 
-### ✅ Core Features
-| Feature                         | Description                                                                 |
-|----------------------------------|-----------------------------------------------------------------------------|
-| Reader Mode Toggle               | Toolbar icon allows user to turn Reader Mode on/off.                       |
-| Clean Reading UI                | Displays only main content: title, article text, images.                   |
-| Light/Dark Mode                 | User can toggle between light and dark themes.                             |
-| Font and Size Options           | Adjustable font family and size for readability.                           |
-| Page Navigation                 | Preserves links within content (if not filtered).                          |
-| Back to Original Page           | Button to return to original webpage.                                      |
+- Improve accessibility for users with reading difficulties or visual impairments.
+- Provide a seamless read-aloud experience for articles, blog posts, and documentation.
+- Enable users to listen to selected content hands-free with visual feedback.
 
 ---
 
-### 🔧 Optional Features (Future Enhancements)
-| Feature                         | Description                                                                 |
-|----------------------------------|-----------------------------------------------------------------------------|
-| Text-to-Speech                  | Button to read aloud content using Web Speech API.                         |
-| Save to Reading List            | Save content for offline reading using browser storage.                    |
-| Scroll Progress Indicator       | Show scroll progress bar.                                                  |
-| Highlighting & Notes            | Allow user to highlight text or take notes.                                |
+## 📦 Tech Stack
+
+### ✅ Frontend (Browser Extension)
+- **Manifest V3**
+- **HTML + CSS + JavaScript**
+- **Cross-browser support:** Chrome, Edge, Firefox
+
+### ✅ Backend
+- **Node.js + Express.js**
+- **Gemini 2.0 Flash Lite API** for extracting the main article text
+
+### ✅ Machine Learning
+- **Gemini 2.0 Flash Lite**: Main content extraction (like Reader Mode)
 
 ---
 
-## 🧠 Content Extraction Strategy
+## 🗂 Project Structure
 
-- Use DOM parsing via `content.js` to extract:
-  - `<article>`, `<main>`, or most content-rich `<div>`
-  - Use heuristics and libraries like **Readability.js (from Mozilla)**
-- Sanitize HTML to remove ads, scripts, overlays, etc.
+```
+project-root/
+│
+├── extension/        # Frontend code for the browser extension
+│   ├── popup.html
+│   ├── popup.js
+│   ├── content.js
+│   ├── background.js
+│   ├── styles.css
+│   └── manifest.json
+│
+└── backend/          # Express.js backend
+    ├── server.js
+    ├── routes/
+    │   └── extract.js
+    └── services/
+        └── gemini.js
+```
 
 ---
 
-## 📂 File Descriptions
+## 🌟 Features
 
-| File                | Purpose                                                                 |
-|---------------------|-------------------------------------------------------------------------|
-| `manifest.json`     | Declares extension, permissions, and background scripts.                |
-| `background.js`     | Handles toggle logic, page action, and communicates with `content.js`. |
-| `content.js`        | Injected into web pages to extract and sanitize readable content.       |
-| `reader/reader.html`| The clean reading page template.                                        |
-| `reader/reader.css` | Styles for light/dark mode, fonts, spacing.                            |
-| `reader/reader.js`  | Injects extracted content, handles UI toggles.                         |
+### 🔊 Core Functionality
+- **Reader Mode with Main Content Extraction**
+  - Extracts primary content using Gemini 2.0 Flash Lite via backend
+  - Displays a clean, distraction-free reading interface
+
+- **Text-to-Speech (TTS)**
+  - Reads extracted or selected content aloud
+  - Supports system voices with adjustable pitch and rate
+
+- **Word-by-Word Highlighting**
+  - Syncs TTS with word highlighting
+  - Uses `range.getBoundingClientRect()` for precise positioning
+
+### 🎛️ User Experience
+- **Floating Control Bar**
+  - Play/Pause button
+  - Speed control (0.5x to 4x)
+  - Voice and pitch selection
+  - Always visible, draggable UI
+
+- **Smart Scrolling**
+  - Auto-scrolls to match the word being read aloud
+
+- **Context Menu Integration**
+  - Right-click on selected text to trigger read-aloud functionality
+
+- **Read from Selection**
+  - Users can select any part of the webpage and right-click to read aloud
+
+- **Offline Mode (Optional/Future)**
+  - Use built-in browser TTS for offline support
 
 ---
 
-## 🔐 Permissions Needed
+## 🔐 Permissions (manifest.json)
 
 ```json
 "permissions": [
+  "contextMenus",
   "activeTab",
   "scripting",
   "storage"
 ],
 "host_permissions": [
   "<all_urls>"
-]
+],
+"background": {
+  "service_worker": "background.js"
+}
 ```
 
 ---
 
-## 🧪 Testing & Browser Compatibility
+## 🔄 Backend API Endpoints
 
-| Browser      | Manifest V3 Support | Notes                        |
-|--------------|---------------------|------------------------------|
-| Chrome       | ✅                   | Full support                 |
-| Edge         | ✅                   | Same as Chrome               |
-| Firefox      | ✅                   | Needs `browser` API shim     |
+### `POST /extract`
+Extracts main readable content from a given URL using Gemini 2.0 Flash Lite.
+
+#### Request Body:
+```json
+{
+  "url": "https://example.com/article"
+}
+```
+
+#### Response:
+```json
+{
+  "title": "Article Title",
+  "content": "Main readable content..."
+}
+```
 
 ---
 
-## 🕹️ User Flow
+## 🧪 Testing
 
-1. User visits a webpage with an article.
-2. Clicks on the Reader Mode icon.
-3. Extension:
-   - Extracts main content.
-   - Opens `reader.html` in a new tab with the cleaned content.
-4. User can customize font/theme.
-5. Option to return to original page.
+- Compatibility tested across Chrome, Edge, Firefox
+- Responsive design for floating control bar
+- Performance tested for large pages
+- Accessibility audits (screen reader & keyboard navigation)
 
 ---
 
-## 🚧 other Plans
+## 📅 Timeline
 
-- Add keyboard shortcuts.
-- Sync reading preferences across devices using `chrome.storage.sync`.
-- Allow offline access to saved articles.
+| Phase                | Duration     |
+|---------------------|--------------|
+| Requirements & Design | 3 days       |
+| Frontend Extension Dev | 7 days       |
+| Backend API & Gemini Integration | 4 days       |
+| TTS + Word Highlighting | 4 days       |
+| Testing & Debugging  | 3 days       |
+| Deployment & Packaging | 2 days       |
+
+---
+
+## 🚀 other Enhancements
+
+- Language detection and multilingual TTS
+- Dark mode and accessibility themes
+- Save-for-later reading queue
+- Offline text caching
+- User analytics dashboard
