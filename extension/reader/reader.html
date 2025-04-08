@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reader Mode</title>
+  <link rel="stylesheet" href="reader.css">
+</head>
+<body class="light-theme">
+  <div id="reader-container">
+    <div id="reader-toolbar">
+      <button id="theme-toggle" title="Toggle dark/light theme">🌙</button>
+      <div class="font-size-controls">
+        <button id="decrease-font" title="Decrease font size">A-</button>
+        <button id="increase-font" title="Increase font size">A+</button>
+      </div>
+      <button id="read-aloud" title="Read aloud">🔊</button>
+      <button id="close-reader" title="Close reader mode">✕</button>
+    </div>
+    
+    <div id="reader-content">
+      <h1 id="article-title"></h1>
+      <div id="article-content"></div>
+    </div>
+  </div>
+  
+  <div id="tts-controls">
+    <div id="tts-drag-handle">⋮⋮</div>
+    <div class="tts-buttons">
+      <button id="tts-play-pause" title="Play/Pause">▶️</button>
+      <button id="tts-stop" title="Stop">⏹️</button>
+      <select id="tts-speed" title="Speech rate">
+        <option value="0.5">0.5x</option>
+        <option value="0.75">0.75x</option>
+        <option value="1.0" selected>1.0x</option>
+        <option value="1.25">1.25x</option>
+        <option value="1.5">1.5x</option>
+        <option value="1.75">1.75x</option>
+        <option value="2.0">2.0x</option>
+        <option value="3.0">3.0x</option>
+        <option value="4.0">4.0x</option>
+      </select>
+      <select id="tts-voice" title="Voice selection"></select>
+    </div>
+  </div>
+  
+  <script src="reader.js"></script>
+</body>
+</html>
