@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reader Mode</title>
+  <link rel="stylesheet" href="reader.css">
+</head>
+<body class="light-mode">
+  <div class="reader-container">
+    <div class="reader-controls">
+      <div class="control-group">
+        <button id="back-button" title="Back to original page">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+        </button>
+      </div>
+      
+      <div class="control-group">
+        <button id="theme-toggle" title="Toggle light/dark mode">
+          <svg id="light-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg id="dark-icon" class="hidden" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+      </div>
+      
+      <div class="control-group">
+        <select id="font-family" title="Change font">
+          <option value="system-ui">System</option>
+          <option value="Georgia, serif">Georgia</option>
+          <option value="'Merriweather', serif">Merriweather</option>
+          <option value="'Roboto Slab', serif">Roboto Slab</option>
+          <option value="'Open Sans', sans-serif">Open Sans</option>
+          <option value="Arial, sans-serif">Arial</option>
+        </select>
+        
+        <button id="font-size-decrease" title="Decrease font size">A-</button>
+        <button id="font-size-increase" title="Increase font size">A+</button>
+      </div>
+    </div>
+    
+    <div class="reader-content">
+      <h1 id="article-title">Loading article...</h1>
+      <div id="article-byline" class="article-byline"></div>
+      <div id="article-content" class="article-content">
+        <p>Loading content...</p>
+      </div>
+    </div>
+    
+    <div class="reader-footer">
+      <a id="original-url" href="#" target="_blank">View Original Page</a>
+    </div>
+  </div>
+  
+  <script src="reader.js"></script>
+</body>
+</html>
