@@ -33,14 +33,14 @@ async function extractContent(url, htmlContent) {
     You are a specialized content extraction system designed to identify and extract the article content from webpages.
 
     TASK:
-    Extract ONLY the article content from the provided HTML, ignoring navigation, sidebars, ads, footers, and other non-essential elements.
+    Extract ONLY the article content from the provided HTML, ignoring navigation, sidebars, advertisements, footers, and other non-essential elements.
 
     URL: ${url}
 
     FORMAT YOUR RESPONSE AS JSON with these fields:
     {
       "title": "The article title",
-      "content": "The full article content in proper Markdown format. Preserve all headings, lists, tables, and other formatting elements."
+      "content": "The full article content in proper Markdown format. Preserve headings, lists, tables, and other formatting elements."
     }
 
     IMPORTANT GUIDELINES:
