@@ -103,27 +103,103 @@ function extractWithBackgroundScript(tab) {
                     if (typeof Readability === "undefined") {
                         // If Readability is not available, use a simple extraction method
                         const title = document.title || "";
-                        const content =
-                            document.querySelector("article") ||
-                            document.querySelector("main") ||
-                            document.querySelector(".article") ||
-                            document.querySelector(".content") ||
-                            document.body;
+
+                        // Check if this is The Guardian website
+                        const isGuardian =
+                            window.location.hostname.includes(
+                                "theguardian.com"
+                            );
+
+                        let content;
+                        let byline =
+                            document.querySelector('meta[name="author"]')
+                                ?.content || "";
+
+                        if (isGuardian) {
+                            // Guardian-specific extraction
+                            const mainContent =
+                                document.getElementById("maincontent");
+                            const contentBlocks = document.querySelectorAll(
+                                'div[data-component="text-block"]'
+                            );
+
+                            if (contentBlocks && contentBlocks.length > 0) {
+                                // Create a container for the content
+                                const container = document.createElement("div");
+
+                                // Add the main image if available
+                                const mainImage =
+                                    document.querySelector("figure img");
+                                if (mainImage) {
+                                    const figure =
+                                        document.createElement("figure");
+                                    figure.appendChild(
+                                        mainImage.cloneNode(true)
+                                    );
+
+                                    const figCaption =
+                                        document.querySelector("figcaption");
+                                    if (figCaption) {
+                                        figure.appendChild(
+                                            figCaption.cloneNode(true)
+                                        );
+                                    }
+
+                                    container.appendChild(figure);
+                                }
+
+                                // Add all content blocks
+                                contentBlocks.forEach((block) => {
+                                    container.appendChild(
+                                        block.cloneNode(true)
+                                    );
+                                });
+
+                                content = container;
+                                byline =
+                                    document.querySelector('a[rel="author"]')
+                                        ?.textContent || byline;
+                            } else {
+                                content =
+                                    mainContent ||
+                                    document.querySelector("article");
+                            }
+                        } else {
+                            // Generic extraction for other sites
+                            content =
+                                document.querySelector("article") ||
+                                document.querySelector("main") ||
+                                document.querySelector(".article") ||
+                                document.querySelector(".content") ||
+                                document.body;
+                        }
 
                         return {
                             title: title,
                             content: content
-                                ? content.innerHTML
+                                ? content instanceof Element
+                                    ? content.innerHTML
+                                    : content
                                 : document.body.innerHTML,
                             url: window.location.href,
-                            byline:
-                                document.querySelector('meta[name="author"]')
-                                    ?.content || "",
+                            byline: byline,
                         };
                     } else {
                         // Use Readability if available
                         const documentClone = document.cloneNode(true);
-                        const reader = new Readability(documentClone);
+
+                        // Configure Readability with better options
+                        const reader = new Readability(documentClone, {
+                            charThreshold: 400, // Lower threshold to capture more content
+                            classesToPreserve: [
+                                "page",
+                                "article",
+                                "content",
+                                "main",
+                            ],
+                            keepClasses: true, // Keep important classes for styling
+                        });
+
                         return reader.parse();
                     }
                 } catch (error) {
