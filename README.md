@@ -16,15 +16,25 @@ Visit our [GitHub Pages website](https://chirag127.github.io/Reader-Mode-Browser
 
 ## 🛠️ Tech Stack / Tools Used
 
+### Frontend (Extension)
+
 -   HTML5, CSS3, JavaScript (Vanilla)
 -   Chrome Extension API
 -   Firefox WebExtension API
 -   Manifest V3
--   Mozilla's Readability.js
+-   Mozilla's Readability.js (fallback)
 -   Web Speech API
+
+### Backend
+
+-   Node.js
+-   Express.js
+-   Google Generative AI API (Gemini 2.0 Flash Lite)
+-   CORS for cross-origin requests
 
 ## 🧪 Features
 
+-   **AI-Powered Content Extraction**: Uses Google's Gemini 2.0 Flash Lite model for superior content extraction
 -   **Clean Reading UI**: Displays only main content (title, article text, images)
 -   **Light/Dark Mode**: Toggle between light and dark themes
 -   **Font Customization**: Adjustable font family and size for better readability
@@ -37,10 +47,36 @@ Visit our [GitHub Pages website](https://chirag127.github.io/Reader-Mode-Browser
 -   **Context Menu Integration**: Right-click on selected text to start reading
 -   **Smart Scrolling**: Automatically scrolls to keep the current text in view
 -   **Customizable Voice**: Choose from available system voices and adjust pitch
+-   **Fallback Mechanisms**: Gracefully falls back to Readability.js when AI extraction is unavailable
 
 ## 💾 Installation Instructions
 
-### Chrome / Edge
+### Backend Setup
+
+1. Navigate to the backend directory:
+    ```
+    cd backend
+    ```
+2. Install dependencies:
+    ```
+    npm install
+    ```
+3. Create a `.env` file based on the `.env.example` file:
+    ```
+    cp .env.example .env
+    ```
+4. Add your Google AI API key to the `.env` file:
+    ```
+    GEMINI_API_KEY=your_api_key_here
+    ```
+5. Start the backend server:
+    ```
+    npm start
+    ```
+
+### Extension Setup
+
+#### Chrome / Edge
 
 1. Download or clone this repository
 2. Open Chrome/Edge and navigate to `chrome://extensions/` or `edge://extensions/`
@@ -48,13 +84,17 @@ Visit our [GitHub Pages website](https://chirag127.github.io/Reader-Mode-Browser
 4. Click "Load unpacked" and select the `extension` folder from this repository
 5. The Reader Mode extension should now appear in your browser toolbar
 
-### Firefox
+#### Firefox
 
 1. Download or clone this repository
 2. Open Firefox and navigate to `about:debugging#/runtime/this-firefox`
 3. Click "Load Temporary Add-on"
 4. Select any file in the `extension` folder from this repository
 5. The Reader Mode extension should now appear in your browser toolbar
+
+### Configuration
+
+If you need to change the backend URL or disable Gemini extraction, you can modify the `config.js` file in the extension directory.
 
 ## 🔧 Usage
 
@@ -81,7 +121,9 @@ Visit our [GitHub Pages website](https://chirag127.github.io/Reader-Mode-Browser
 
 ## 🧠 How It Works
 
-The extension uses Mozilla's Readability.js algorithm to identify and extract the main content of a webpage, removing distractions like ads, sidebars, and navigation elements. It then presents this content in a clean, customizable format optimized for reading.
+The extension uses Google's Gemini 2.0 Flash Lite AI model to identify and extract the main content of a webpage, removing distractions like ads, sidebars, and navigation elements. It then presents this content in a clean, customizable format optimized for reading.
+
+As a fallback mechanism, the extension also includes Mozilla's Readability.js algorithm for content extraction when the Gemini API is unavailable or for offline use.
 
 ## 📸 Screenshots
 
@@ -164,7 +206,8 @@ Please make sure to update tests as appropriate and adhere to the existing codin
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## Credits
+## 👏 Credits
 
 -   [Mozilla's Readability.js](https://github.com/mozilla/readability) - Content extraction algorithm
 -   [Google Fonts](https://fonts.google.com/) - Web fonts used in the reader UI
+-   [Web Speech API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API) - Text-to-speech functionality

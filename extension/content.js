@@ -1,6 +1,7 @@
 /**
  * Reader Mode Browser Extension
  * content.js - Injected into webpages to extract and clean article content
+ * Uses Gemini 2.0 Flash Lite for enhanced content extraction
  */
 
 // Load Readability.js from Mozilla
@@ -87,36 +88,146 @@ function extractGuardianContent() {
     }
 }
 
+// Load configuration
+let CONFIG = {
+    GEMINI_API_URL: "http://localhost:3000/api/extract",
+    USE_GEMINI: true,
+    FALLBACK_TO_READABILITY: true,
+    DEBUG: false,
+};
+
+// Try to load the configuration from the config.js file
+try {
+    if (typeof window.CONFIG !== "undefined") {
+        CONFIG = window.CONFIG;
+    }
+} catch (error) {
+    console.warn("Could not load configuration, using defaults");
+}
+
+/**
+ * Extract content using Gemini 2.0 Flash Lite
+ * @returns {Promise<Object>} The extracted article content
+ */
+async function extractWithGemini() {
+    try {
+        // Skip Gemini if disabled in config
+        if (!CONFIG.USE_GEMINI) {
+            throw new Error("Gemini extraction is disabled in configuration");
+        }
+
+        // Get the page HTML, URL, and title
+        const html = document.documentElement.outerHTML;
+        const url = window.location.href;
+        const title = document.title;
+
+        if (CONFIG.DEBUG) {
+            console.log("Extracting content with Gemini:", { url, title });
+        }
+
+        // Send the HTML to the Gemini backend
+        const response = await fetch(CONFIG.GEMINI_API_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ html, url, title }),
+        });
+
+        if (!response.ok) {
+            throw new Error(
+                `Gemini backend error: ${response.status} ${response.statusText}`
+            );
+        }
+
+        const data = await response.json();
+
+        if (!data.success || !data.article) {
+            throw new Error("Failed to extract content with Gemini");
+        }
+
+        return data.article;
+    } catch (error) {
+        console.error("Error extracting with Gemini:", error);
+        throw error;
+    }
+}
+
 // Listen for messages from the background script
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.action === "extractContent") {
-        try {
-            // First try site-specific extraction for known sites
-            let article = extractGuardianContent();
+        // Use an async IIFE to handle the async extraction
+        (async () => {
+            try {
+                let article;
 
-            // If site-specific extraction failed, fall back to Readability
-            if (!article) {
-                // Create a new Readability object
-                const documentClone = document.cloneNode(true);
-                const reader = new Readability(documentClone, {
-                    // Additional options to improve extraction
-                    charThreshold: 400, // Lower threshold to capture more content
-                    classesToPreserve: ["page", "article", "content", "main"],
+                // First try Gemini extraction if enabled
+                if (CONFIG.USE_GEMINI) {
+                    try {
+                        article = await extractWithGemini();
+                        if (CONFIG.DEBUG) {
+                            console.log("Content extracted with Gemini");
+                        }
+                    } catch (geminiError) {
+                        if (CONFIG.DEBUG) {
+                            console.warn(
+                                "Gemini extraction failed, falling back to alternatives:",
+                                geminiError
+                            );
+                        }
+
+                        // Only fall back if enabled in config
+                        if (!CONFIG.FALLBACK_TO_READABILITY) {
+                            throw geminiError; // Re-throw if no fallback is allowed
+                        }
+                    }
+                }
+
+                // If Gemini didn't work or is disabled, try alternatives
+                if (!article) {
+                    // Try site-specific extraction for known sites
+                    article = extractGuardianContent();
+
+                    if (article && CONFIG.DEBUG) {
+                        console.log(
+                            "Content extracted with site-specific extractor"
+                        );
+                    }
+
+                    // If site-specific extraction failed, fall back to Readability
+                    if (!article) {
+                        if (CONFIG.DEBUG) {
+                            console.log("Falling back to Readability");
+                        }
+                        // Create a new Readability object
+                        const documentClone = document.cloneNode(true);
+                        const reader = new Readability(documentClone, {
+                            // Additional options to improve extraction
+                            charThreshold: 400, // Lower threshold to capture more content
+                            classesToPreserve: [
+                                "page",
+                                "article",
+                                "content",
+                                "main",
+                            ],
+                        });
+                        article = reader.parse();
+                    }
+                }
+
+                sendResponse({
+                    success: true,
+                    article: article,
                 });
-                article = reader.parse();
+            } catch (error) {
+                console.error("Error extracting content:", error);
+                sendResponse({
+                    success: false,
+                    error: error.message,
+                });
             }
+        })();
 
-            sendResponse({
-                success: true,
-                article: article,
-            });
-        } catch (error) {
-            console.error("Error extracting content:", error);
-            sendResponse({
-                success: false,
-                error: error.message,
-            });
-        }
         return true; // Required for async response
     }
 });
