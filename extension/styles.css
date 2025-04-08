@@ -5,282 +5,389 @@
 
 /* Reader Mode Container */
 #reader-mode-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 9999;
-  overflow-y: auto;
-  padding: 20px;
-  box-sizing: border-box;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    overflow-y: auto;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 /* Light Theme */
 .light-theme {
-  background-color: #f8f9fa;
-  color: #333;
+    background-color: #f8f9fa;
+    color: #333;
 }
 
 /* Dark Theme */
 .dark-theme {
-  background-color: #222;
-  color: #eee;
+    background-color: #222;
+    color: #eee;
 }
 
 /* Reader Content */
 #reader-content {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-  line-height: 1.5;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 1.5;
 }
 
 /* Reader Title */
 #reader-title {
-  font-size: 2em;
-  margin-bottom: 20px;
-  line-height: 1.2;
+    font-size: 2em;
+    margin-bottom: 20px;
+    line-height: 1.2;
 }
 
 /* Reader Article */
 #reader-article {
-  margin-top: 20px;
+    margin-top: 20px;
 }
 
 #reader-article p {
-  margin-bottom: 1em;
+    margin-bottom: 1em;
+}
+
+#reader-article h1,
+#reader-article h2,
+#reader-article h3,
+#reader-article h4,
+#reader-article h5,
+#reader-article h6 {
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+    line-height: 1.2;
+}
+
+#reader-article h1 {
+    font-size: 2em;
+}
+#reader-article h2 {
+    font-size: 1.75em;
+}
+#reader-article h3 {
+    font-size: 1.5em;
+}
+#reader-article h4 {
+    font-size: 1.25em;
+}
+#reader-article h5 {
+    font-size: 1.1em;
+}
+#reader-article h6 {
+    font-size: 1em;
+    font-weight: bold;
+}
+
+#reader-article ul,
+#reader-article ol {
+    margin: 1em 0;
+    padding-left: 2em;
+}
+
+#reader-article li {
+    margin-bottom: 0.5em;
+}
+
+#reader-article blockquote {
+    border-left: 4px solid #ccc;
+    padding-left: 1em;
+    margin: 1em 0;
+    color: #666;
+}
+
+.dark-theme #reader-article blockquote {
+    border-left-color: #555;
+    color: #aaa;
+}
+
+#reader-article pre {
+    background-color: #f5f5f5;
+    padding: 1em;
+    border-radius: 4px;
+    overflow-x: auto;
+    margin: 1em 0;
+}
+
+.dark-theme #reader-article pre {
+    background-color: #333;
+}
+
+#reader-article code {
+    font-family: monospace;
+    background-color: #f5f5f5;
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+}
+
+.dark-theme #reader-article code {
+    background-color: #333;
+}
+
+#reader-article table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1em 0;
+}
+
+#reader-article th,
+#reader-article td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.dark-theme #reader-article th,
+.dark-theme #reader-article td {
+    border-color: #555;
+}
+
+#reader-article th {
+    background-color: #f5f5f5;
+    font-weight: bold;
+}
+
+.dark-theme #reader-article th {
+    background-color: #333;
 }
 
 #reader-article img {
-  max-width: 100%;
-  height: auto;
-  margin: 1em 0;
+    max-width: 100%;
+    height: auto;
+    margin: 1em 0;
 }
 
 /* Image Placeholder */
 .image-placeholder {
-  background-color: #f0f0f0;
-  border: 1px dashed #ccc;
-  padding: 20px;
-  text-align: center;
-  margin: 1em 0;
-  color: #666;
+    background-color: #f0f0f0;
+    border: 1px dashed #ccc;
+    padding: 20px;
+    text-align: center;
+    margin: 1em 0;
+    color: #666;
 }
 
 .dark-theme .image-placeholder {
-  background-color: #333;
-  border-color: #555;
-  color: #aaa;
+    background-color: #333;
+    border-color: #555;
+    color: #aaa;
 }
 
 /* Toolbar */
 #reader-toolbar {
-  position: fixed;
-  top: 10px;
-  right: 10px;
-  background-color: rgba(255, 255, 255, 0.9);
-  border-radius: 5px;
-  padding: 5px;
-  display: flex;
-  gap: 5px;
-  z-index: 10000;
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 5px;
+    padding: 5px;
+    display: flex;
+    gap: 5px;
+    z-index: 10000;
 }
 
 .dark-theme #reader-toolbar {
-  background-color: rgba(50, 50, 50, 0.9);
+    background-color: rgba(50, 50, 50, 0.9);
 }
 
 #reader-toolbar button {
-  background-color: transparent;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-  padding: 5px 10px;
-  cursor: pointer;
-  font-size: 14px;
+    background-color: transparent;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 14px;
 }
 
 .dark-theme #reader-toolbar button {
-  border-color: #555;
-  color: #eee;
+    border-color: #555;
+    color: #eee;
 }
 
 #reader-toolbar button:hover {
-  background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 .dark-theme #reader-toolbar button:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 /* Font Size Controls */
 .font-size-controls {
-  display: flex;
-  gap: 2px;
+    display: flex;
+    gap: 2px;
 }
 
 /* Close Button */
 #reader-close-button {
-  position: fixed;
-  top: 10px;
-  left: 10px;
-  background-color: transparent;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-  color: #666;
-  z-index: 10000;
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    background-color: transparent;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+    z-index: 10000;
 }
 
 .dark-theme #reader-close-button {
-  color: #aaa;
+    color: #aaa;
 }
 
 #reader-close-button:hover {
-  color: #000;
+    color: #000;
 }
 
 .dark-theme #reader-close-button:hover {
-  color: #fff;
+    color: #fff;
 }
 
 /* Loading Indicator */
 #reader-loading-indicator {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(255, 255, 255, 0.8);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  z-index: 10001;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10001;
 }
 
 .dark-theme #reader-loading-indicator {
-  background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.8);
 }
 
 .spinner {
-  width: 40px;
-  height: 40px;
-  border: 4px solid #f3f3f3;
-  border-top: 4px solid #3498db;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 /* Error Message */
 #reader-error-message {
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #f44336;
-  color: white;
-  padding: 15px;
-  border-radius: 5px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-  z-index: 10001;
-  max-width: 80%;
-  text-align: center;
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #f44336;
+    color: white;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 10001;
+    max-width: 80%;
+    text-align: center;
 }
 
 #reader-error-message button {
-  background-color: white;
-  color: #f44336;
-  border: none;
-  padding: 5px 10px;
-  margin-top: 10px;
-  border-radius: 3px;
-  cursor: pointer;
+    background-color: white;
+    color: #f44336;
+    border: none;
+    padding: 5px 10px;
+    margin-top: 10px;
+    border-radius: 3px;
+    cursor: pointer;
 }
 
 /* Text-to-Speech Controls */
 #tts-controls-container {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: rgba(255, 255, 255, 0.9);
-  border-radius: 5px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-  padding: 10px;
-  z-index: 10000;
-  display: flex;
-  flex-direction: column;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
 }
 
 .dark-theme #tts-controls-container {
-  background-color: rgba(50, 50, 50, 0.9);
+    background-color: rgba(50, 50, 50, 0.9);
 }
 
 #tts-controls {
-  display: flex;
-  gap: 5px;
-  align-items: center;
+    display: flex;
+    gap: 5px;
+    align-items: center;
 }
 
 #tts-controls button {
-  background-color: transparent;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-  padding: 5px 10px;
-  cursor: pointer;
-  font-size: 16px;
+    background-color: transparent;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 16px;
 }
 
 .dark-theme #tts-controls button {
-  border-color: #555;
-  color: #eee;
+    border-color: #555;
+    color: #eee;
 }
 
 #tts-controls button:hover {
-  background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 .dark-theme #tts-controls button:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
 #tts-controls select {
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-  background-color: white;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    background-color: white;
 }
 
 .dark-theme #tts-controls select {
-  background-color: #333;
-  border-color: #555;
-  color: #eee;
+    background-color: #333;
+    border-color: #555;
+    color: #eee;
 }
 
 #tts-drag-handle {
-  cursor: move;
-  text-align: center;
-  padding-bottom: 5px;
-  color: #666;
+    cursor: move;
+    text-align: center;
+    padding-bottom: 5px;
+    color: #666;
 }
 
 .dark-theme #tts-drag-handle {
-  color: #aaa;
+    color: #aaa;
 }
 
 /* Word Highlighting */
 .tts-highlight {
-  background-color: #ffff00;
-  color: #000;
-  border-radius: 2px;
+    background-color: #ffff00;
+    color: #000;
+    border-radius: 2px;
 }
 
 .dark-theme .tts-highlight {
-  background-color: #ffd700;
-  color: #000;
+    background-color: #ffd700;
+    color: #000;
 }

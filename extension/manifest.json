@@ -31,15 +31,29 @@
   },
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
-      "js": ["content.js"],
-      "css": ["styles.css"]
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "markdown-utils.js",
+        "content.js"
+      ],
+      "css": [
+        "styles.css"
+      ]
     }
   ],
   "web_accessible_resources": [
     {
-      "resources": ["reader/reader.html", "reader/reader.css", "reader/reader.js"],
-      "matches": ["<all_urls>"]
+      "resources": [
+        "reader/reader.html",
+        "reader/reader.css",
+        "reader/reader.js",
+        "reader/markdown-utils.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
     }
   ],
   "commands": {

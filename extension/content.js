@@ -135,29 +135,8 @@ function createReaderModeUI(content) {
     createFloatingControls();
 }
 
-// Format the content for display
-function formatContent(content) {
-    // Replace newlines with paragraph tags
-    let formatted = content
-        .replace(/\\n\\n/g, "</p><p>")
-        .replace(/\\n/g, "<br>");
-
-    // Wrap in paragraph tags if not already
-    if (!formatted.startsWith("<p>")) {
-        formatted = "<p>" + formatted;
-    }
-    if (!formatted.endsWith("</p>")) {
-        formatted += "</p>";
-    }
-
-    // Handle image placeholders
-    formatted = formatted.replace(
-        /\[IMAGE\]/g,
-        '<div class="image-placeholder">[Image]</div>'
-    );
-
-    return formatted;
-}
+// Format the content for display - using the function from markdown-utils.js
+// The implementation is now in markdown-utils.js
 
 // Create the toolbar for reader mode
 function createToolbar() {

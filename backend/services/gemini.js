@@ -30,25 +30,34 @@ async function extractContent(url, htmlContent) {
 
     // Create the prompt for content extraction
     const prompt = `
-    You are a specialized content extraction system designed to identify and extract the main article content from webpages.
+    You are a specialized content extraction system designed to identify and extract the article content from webpages.
 
     TASK:
-    Extract ONLY the main article content from the provided HTML, ignoring navigation, sidebars, ads, footers, and other non-essential elements.
+    Extract ONLY the article content from the provided HTML, ignoring navigation, sidebars, ads, footers, and other non-essential elements.
 
     URL: ${url}
 
     FORMAT YOUR RESPONSE AS JSON with these fields:
     {
       "title": "The article title",
-      "content": "The full article content with paragraphs separated by newlines. Include important images with [IMAGE] placeholders."
+      "content": "The full article content in proper Markdown format. Preserve all headings, lists, tables, and other formatting elements."
     }
 
     IMPORTANT GUIDELINES:
-    - Focus ONLY on the main article content
-    - Preserve the original text formatting (paragraphs, headings)
-    - Include important images with [IMAGE] placeholders
+    - Focus ONLY on the article content
+    - Convert the content to proper Markdown format
+    - Use # for main headings, ## for subheadings, etc.
+    - Preserve bullet points as - or * lists
+    - Preserve numbered lists as 1., 2., etc.
+    - Convert tables to Markdown table format
+    - Include important images with ![Image](image_url) or just [IMAGE] if URL not available
+    - Preserve code blocks with \`\`\` for inline code and triple backticks for code block
+    - Preserve blockquotes with >
     - Exclude navigation menus, sidebars, ads, footers, and comments
     - If no clear article content is found, return {"title": "", "content": "No article content found"}
+    - Exclude any disclaimers or notices about the content extraction process
+    - exclude related articles, author information, and publication date
+
 
     HTML CONTENT:
     ${htmlContent.substring(0, 500000)} // Limit content to avoid token limits

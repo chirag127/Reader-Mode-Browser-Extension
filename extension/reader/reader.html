@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Reader Mode</title>
   <link rel="stylesheet" href="reader.css">
 </head>
+
 <body class="light-theme">
   <div id="reader-container">
     <div id="reader-toolbar">
@@ -17,13 +19,13 @@
       <button id="read-aloud" title="Read aloud">🔊</button>
       <button id="close-reader" title="Close reader mode">✕</button>
     </div>
-    
+
     <div id="reader-content">
       <h1 id="article-title"></h1>
       <div id="article-content"></div>
     </div>
   </div>
-  
+
   <div id="tts-controls">
     <div id="tts-drag-handle">⋮⋮</div>
     <div class="tts-buttons">
@@ -43,7 +45,9 @@
       <select id="tts-voice" title="Voice selection"></select>
     </div>
   </div>
-  
+
+  <script src="markdown-utils.js"></script>
   <script src="reader.js"></script>
 </body>
+
 </html>
