@@ -14,7 +14,7 @@ This document provides instructions for testing the Read Aloud: Intelligent Read
     - Navigate to the `backend` directory
     - Run `npm install` to install dependencies
     - Run `npm start` to start the server
-    - Ensure the server is running on http://localhost:3000
+    - Ensure the server is running on https://reader-mode-browser-extension.onrender.com
 
 3. Open the test page:
     - Open the `test/test_article.html` file in your browser.

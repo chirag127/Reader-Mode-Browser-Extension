@@ -385,9 +385,15 @@
     background-color: #ffff00;
     color: #000;
     border-radius: 2px;
+    padding: 2px 0;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.15s ease-in-out;
+    font-weight: bold;
+    display: inline-block;
 }
 
 .dark-theme .tts-highlight {
     background-color: #ffd700;
     color: #000;
+    box-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
 }

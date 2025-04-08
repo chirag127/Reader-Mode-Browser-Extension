@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,31 +13,31 @@
       margin: 0;
       transition: background-color 0.3s, color 0.3s;
     }
-    
+
     body.light-theme {
       background-color: #f8f9fa;
       color: #333;
     }
-    
+
     body.dark-theme {
       background-color: #222;
       color: #eee;
     }
-    
+
     h1 {
       font-size: 18px;
       margin-top: 0;
       margin-bottom: 15px;
       text-align: center;
     }
-    
+
     .button-container {
       display: flex;
       flex-direction: column;
       gap: 10px;
       margin-bottom: 15px;
     }
-    
+
     button {
       padding: 10px;
       border: none;
@@ -48,59 +49,60 @@
       justify-content: center;
       transition: background-color 0.3s;
     }
-    
+
     button.primary {
       background-color: #4285f4;
       color: white;
     }
-    
+
     .light-theme button.primary:hover {
       background-color: #2b76f5;
     }
-    
+
     .dark-theme button.primary:hover {
       background-color: #5a94f5;
     }
-    
+
     button.secondary {
       background-color: #f1f3f4;
       color: #333;
     }
-    
+
     .light-theme button.secondary:hover {
       background-color: #e8eaed;
     }
-    
+
     .dark-theme button.secondary {
       background-color: #333;
       color: #eee;
     }
-    
+
     .dark-theme button.secondary:hover {
       background-color: #444;
     }
-    
+
     .settings-container {
       margin-top: 15px;
       border-top: 1px solid #ccc;
       padding-top: 15px;
     }
-    
+
     .dark-theme .settings-container {
       border-top-color: #555;
     }
-    
+
     .setting-group {
       margin-bottom: 10px;
     }
-    
+
     .setting-label {
       display: block;
       margin-bottom: 5px;
       font-weight: 500;
     }
-    
-    select, input {
+
+    select,
+    input {
       width: 100%;
       padding: 8px;
       border-radius: 4px;
@@ -108,19 +110,20 @@
       background-color: white;
       box-sizing: border-box;
     }
-    
-    .dark-theme select, .dark-theme input {
+
+    .dark-theme select,
+    .dark-theme input {
       background-color: #333;
       border-color: #555;
       color: #eee;
     }
-    
+
     .theme-toggle {
       display: flex;
       justify-content: center;
       margin-top: 15px;
     }
-    
+
     .theme-toggle button {
       background-color: transparent;
       border: none;
@@ -128,26 +131,27 @@
       cursor: pointer;
       padding: 5px;
     }
-    
+
     .footer {
       margin-top: 15px;
       text-align: center;
       font-size: 12px;
       color: #666;
     }
-    
+
     .dark-theme .footer {
       color: #aaa;
     }
-    
+
     .icon {
       margin-right: 8px;
     }
   </style>
 </head>
+
 <body class="light-theme">
   <h1>Read Aloud: Reader Mode</h1>
-  
+
   <div class="button-container">
     <button id="activate-reader-mode" class="primary">
       <span class="icon">📖</span> Activate Reader Mode
@@ -156,7 +160,7 @@
       <span class="icon">🔊</span> Read Page Aloud
     </button>
   </div>
-  
+
   <div class="settings-container">
     <div class="setting-group">
       <label class="setting-label" for="font-family">Font Family</label>
@@ -169,13 +173,13 @@
         <option value="'Courier New', monospace">Courier New</option>
       </select>
     </div>
-    
+
     <div class="setting-group">
       <label class="setting-label" for="font-size">Font Size</label>
       <input type="range" id="font-size" min="12" max="32" step="1" value="18">
       <div id="font-size-value" style="text-align: center; margin-top: 5px;">18px</div>
     </div>
-    
+
     <div class="setting-group">
       <label class="setting-label" for="speech-rate">Speech Rate</label>
       <select id="speech-rate">
@@ -187,24 +191,30 @@
         <option value="1.75">1.75x</option>
         <option value="2.0">2.0x (Fast)</option>
         <option value="3.0">3.0x (Very Fast)</option>
-        <option value="4.0">4.0x (Fastest)</option>
+        <option value="4.0">4.0x</option>
+        <option value="6.0">6.0x</option>
+        <option value="8.0">8.0x</option>
+        <option value="10.0">10.0x</option>
+        <option value="12.0">12.0x</option>
+        <option value="16.0">16.0x (Fastest)</option>
       </select>
     </div>
-    
+
     <div class="setting-group">
       <label class="setting-label" for="backend-url">Backend URL</label>
-      <input type="text" id="backend-url" placeholder="http://localhost:3000">
+      <input type="text" id="backend-url" placeholder="https://reader-mode-browser-extension.onrender.com">
     </div>
   </div>
-  
+
   <div class="theme-toggle">
     <button id="theme-toggle" title="Toggle dark/light theme">🌙</button>
   </div>
-  
+
   <div class="footer">
     Read Aloud: Intelligent Reader Mode v1.0.0
   </div>
-  
+
   <script src="popup.js"></script>
 </body>
+
 </html>

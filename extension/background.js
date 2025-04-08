@@ -12,7 +12,7 @@ const DEFAULT_SETTINGS = {
     speechRate: 1.0,
     speechPitch: 1.0,
     voiceURI: "",
-    backendUrl: "http://localhost:3000",
+    backendUrl: "https://reader-mode-browser-extension.onrender.com",
 };
 
 // Log extension ID for debugging

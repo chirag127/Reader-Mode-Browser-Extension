@@ -32,7 +32,7 @@ function initializeReader() {
             speechRate: 1.0,
             speechPitch: 1.0,
             voiceURI: "",
-            backendUrl: "http://localhost:3000",
+            backendUrl: "https://reader-mode-browser-extension.onrender.com",
         };
 
         // Apply settings
@@ -279,29 +279,59 @@ function startSpeech(text) {
     // Update play/pause button
     document.getElementById("tts-play-pause").textContent = "⏸️";
 
+    // Prepare text for better word boundary detection
+    // Add spaces around punctuation to help with word boundary detection
+    const preparedText = text
+        .replace(/([.,!?;:])/g, " $1 ")
+        .replace(/\\s+/g, " ")
+        .trim();
+
     // Split text into words for highlighting
-    const words = text.split(/\\s+/);
+    const words = preparedText.split(/\\s+/);
+    console.log(`Text split into ${words.length} words for highlighting`);
     let wordIndex = 0;
 
     // Handle word boundaries for highlighting
     currentUtterance.onboundary = (event) => {
         if (event.name === "word") {
-            // Clear previous highlights
-            clearHighlights();
+            // Only process if we have a valid word index
+            if (wordIndex < words.length) {
+                // Clear previous highlights
+                clearHighlights();
 
-            // Highlight current word
-            highlightWord(words[wordIndex]);
+                // Get the current word
+                const currentWord = words[wordIndex];
+                console.log(
+                    `Processing word boundary: "${currentWord}" (${wordIndex}/${words.length})`
+                );
 
-            // Increment word index
-            wordIndex++;
+                // Highlight current word
+                highlightWord(currentWord);
 
-            // Scroll to the highlighted word if needed
-            scrollToHighlight();
+                // Increment word index
+                wordIndex++;
+
+                // Scroll to the highlighted word if needed
+                scrollToHighlight();
+            }
         }
     };
 
     // Handle speech end
     currentUtterance.onend = () => {
+        isSpeaking = false;
+        console.log("Speech ended");
+
+        // Update play/pause button
+        document.getElementById("tts-play-pause").textContent = "▶️";
+
+        // Clear highlights
+        clearHighlights();
+    };
+
+    // Handle speech errors
+    currentUtterance.onerror = (event) => {
+        console.error("Speech synthesis error:", event);
         isSpeaking = false;
 
         // Update play/pause button
@@ -314,6 +344,19 @@ function startSpeech(text) {
     // Start speaking
     speechSynthesis.speak(currentUtterance);
     isSpeaking = true;
+    console.log("Started speaking");
+
+    // Force a highlight of the first word immediately
+    if (words.length > 0) {
+        setTimeout(() => {
+            if (isSpeaking && wordIndex === 0) {
+                clearHighlights();
+                highlightWord(words[0]);
+                wordIndex = 1;
+                scrollToHighlight();
+            }
+        }, 100);
+    }
 }
 
 // Toggle play/pause for speech
@@ -352,6 +395,10 @@ function stopSpeech() {
 function highlightWord(word) {
     if (!word) return;
 
+    // Clean the word from any punctuation for better matching
+    const cleanWord = word.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
+    if (cleanWord.trim() === "") return;
+
     const content = document.getElementById("article-content");
     if (!content) return;
 
@@ -372,27 +419,44 @@ function highlightWord(word) {
     // Search for the word in each text node
     for (const node of textNodes) {
         const text = node.nodeValue;
-        const wordRegex = new RegExp(`\\b${word}\\b`, "i");
-        const match = wordRegex.exec(text);
+
+        // Try exact match first
+        let wordRegex = new RegExp(`\\b${cleanWord}\\b`, "i");
+        let match = wordRegex.exec(text);
+
+        // If no exact match, try a more flexible match
+        if (!match) {
+            wordRegex = new RegExp(`${cleanWord}`, "i");
+            match = wordRegex.exec(text);
+        }
 
         if (match) {
-            // Create a range for the matched word
-            const range = document.createRange();
-            range.setStart(node, match.index);
-            range.setEnd(node, match.index + word.length);
+            try {
+                // Create a range for the matched word
+                const range = document.createRange();
+                range.setStart(node, match.index);
+                range.setEnd(node, match.index + match[0].length);
 
-            // Create a highlight span
-            const highlight = document.createElement("span");
-            highlight.className = "tts-highlight";
+                // Create a highlight span
+                const highlight = document.createElement("span");
+                highlight.className = "tts-highlight";
 
-            // Wrap the range with the highlight span
-            range.surroundContents(highlight);
+                // Wrap the range with the highlight span
+                range.surroundContents(highlight);
 
-            // Store the highlighted element
-            highlightedElements.push(highlight);
+                // Store the highlighted element
+                highlightedElements.push(highlight);
 
-            // Only highlight the first occurrence
-            break;
+                // Log successful highlighting
+                console.log(`Highlighted word: "${match[0]}"`);
+
+                // Only highlight the first occurrence
+                break;
+            } catch (error) {
+                console.error("Error highlighting word:", error);
+                // Continue to the next node if there's an error
+                continue;
+            }
         }
     }
 }
