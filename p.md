@@ -1,20 +1,15 @@
-
 # 📄 Product Requirements Document (PRD)
-**Project Title:** Reader Mode Browser Extension
-**Version:** 1.0.0
-**Author:** chirag singhal
-**Date:** 2025-04-08
 
----
+## Project Title: Reader Mode Browser Extension
+## Version: 1.0.0
+## Author: chirag singhal
+## Date: 2025-04-08
 
-## 📌 Overview
+## Overview
+
 Build a lightweight browser extension that enables a **distraction-free, reader-friendly view** of any webpage. It should support **Chrome, Edge, Firefox**, and ideally be extendable to other modern browsers supporting **Manifest V3**.
 
----
-
-## 🎯 Goal
-- Extract the **main content** (title, article, images) of a webpage.
-- Remove all non-essential elements (ads, sidebars, popups).
+## Goals
 - Present it in a **clean, readable layout** with adjustable typography and theme (light/dark).
 - Allow users to toggle Reader Mode from a toolbar icon.
 
@@ -30,18 +25,18 @@ Build a lightweight browser extension that enables a **distraction-free, reader-
   - Chrome
   - Microsoft Edge
   - Firefox (ensure Manifest V3 compliance)
-  - (Optional) Safari (via Safari Web Extension Converter)
 
 - **Project Structure:**
   ```
   extension/
-  ├── icons/                   # Extension icons (16x16, 32x32, 48x48, 128x128)
+  ├── icons/                   # Extension icons (16x16, 48x48, 128x128)
   ├── reader/                  # Reader mode UI HTML/CSS/JS
   │   ├── reader.html
   │   ├── reader.css
   │   └── reader.js
   ├── content.js               # Injected into webpages to extract and clean article content
   ├── background.js            # Manages toggle state, context menu, and tabs
+  ├── extension.js             # Helper functions for the extension
   ├── manifest.json            # Manifest V3 file
   └── popup.html               # Minimal popup for enabling reader mode
   ```
