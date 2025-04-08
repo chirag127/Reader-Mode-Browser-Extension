@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,14 +17,14 @@
             --accent-primary: #1a73e8;
             --accent-secondary: #90caf9;
             --border-color: #444444;
-            
+
             /* Spacing variables */
             --spacing-xs: 0.5rem;
             --spacing-sm: 1rem;
             --spacing-md: 2rem;
             --spacing-lg: 3rem;
             --spacing-xl: 5rem;
-            
+
             /* Font variables */
             --font-primary: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
             --font-size-sm: 0.875rem;
@@ -31,47 +32,47 @@
             --font-size-lg: 1.25rem;
             --font-size-xl: 1.5rem;
             --font-size-xxl: 2.5rem;
-            
+
             /* Border radius */
             --border-radius-sm: 4px;
             --border-radius-md: 8px;
             --border-radius-lg: 12px;
-            
+
             /* Transitions */
             --transition-fast: 0.2s ease;
             --transition-normal: 0.3s ease;
         }
-        
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
-        
+
         body {
             font-family: var(--font-primary);
             background-color: var(--bg-primary);
             color: var(--text-primary);
             line-height: 1.6;
         }
-        
+
         a {
             color: var(--accent-secondary);
             text-decoration: none;
             transition: color var(--transition-fast);
         }
-        
+
         a:hover {
             color: var(--accent-primary);
             text-decoration: underline;
         }
-        
+
         .container {
             max-width: 800px;
             margin: 0 auto;
             padding: 0 var(--spacing-md);
         }
-        
+
         /* Header styles */
         header {
             background-color: var(--bg-secondary);
@@ -79,7 +80,7 @@
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
             position: relative;
         }
-        
+
         .header-content {
             display: flex;
             flex-direction: column;
@@ -87,24 +88,24 @@
             text-align: center;
             padding: var(--spacing-md) 0;
         }
-        
+
         .logo {
             display: flex;
             align-items: center;
             margin-bottom: var(--spacing-md);
         }
-        
+
         .logo img {
             width: 48px;
             height: 48px;
             margin-right: var(--spacing-sm);
         }
-        
+
         .logo h1 {
             font-size: var(--font-size-xl);
             margin: 0;
         }
-        
+
         .back-button {
             position: absolute;
             left: var(--spacing-md);
@@ -116,68 +117,69 @@
             font-size: var(--font-size-md);
             transition: color var(--transition-fast);
         }
-        
+
         .back-button:hover {
             color: var(--text-primary);
             text-decoration: none;
         }
-        
+
         .back-button svg {
             margin-right: var(--spacing-xs);
         }
-        
+
         /* Main content styles */
         main {
             padding: var(--spacing-lg) 0;
         }
-        
+
         .privacy-section {
             margin-bottom: var(--spacing-lg);
         }
-        
+
         .privacy-section:last-child {
             margin-bottom: 0;
         }
-        
+
         .section-title {
             font-size: var(--font-size-lg);
             margin-bottom: var(--spacing-sm);
             color: var(--accent-secondary);
         }
-        
+
         .section-content {
             background-color: var(--bg-tertiary);
             padding: var(--spacing-md);
             border-radius: var(--border-radius-md);
         }
-        
+
         .section-content p {
             margin-bottom: var(--spacing-sm);
         }
-        
+
         .section-content p:last-child {
             margin-bottom: 0;
         }
-        
-        .section-content ul, .section-content ol {
+
+        .section-content ul,
+        .section-content ol {
             margin-left: var(--spacing-md);
             margin-bottom: var(--spacing-sm);
         }
-        
+
         .section-content li {
             margin-bottom: var(--spacing-xs);
         }
-        
+
         .section-content li:last-child {
             margin-bottom: 0;
         }
-        
+
         .updated-date {
             font-style: italic;
             color: var(--text-secondary);
             margin-bottom: var(--spacing-md);
         }
-        
+
         /* Footer styles */
         footer {
             background-color: var(--bg-secondary);
@@ -185,19 +187,19 @@
             text-align: center;
             margin-top: var(--spacing-xl);
         }
-        
+
         .footer-links {
             display: flex;
             justify-content: center;
             gap: var(--spacing-md);
             margin-bottom: var(--spacing-md);
         }
-        
+
         .copyright {
             color: var(--text-secondary);
             font-size: var(--font-size-sm);
         }
-        
+
         /* Responsive styles */
         @media (max-width: 768px) {
             .back-button {
@@ -205,22 +207,24 @@
                 transform: none;
                 margin-bottom: var(--spacing-sm);
             }
-            
+
             .header-content {
                 padding-top: 0;
             }
-            
+
             .section-title {
                 font-size: var(--font-size-md);
             }
         }
     </style>
 </head>
+
 <body>
     <header>
         <div class="container">
             <a href="index.html" class="back-button">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <line x1="19" y1="12" x2="5" y2="12"></line>
                     <polyline points="12 19 5 12 12 5"></polyline>
                 </svg>
@@ -234,42 +238,68 @@
             </div>
         </div>
     </header>
-    
+
     <main>
         <div class="container">
-            <p class="updated-date">Last Updated: April 8, 2023</p>
-            
+            <p class="updated-date">Last Updated: April 8, 2025</p>
+
             <div class="privacy-section">
                 <h2 class="section-title">Introduction</h2>
                 <div class="section-content">
-                    <p>This Privacy Policy explains how the Reader Mode Browser Extension ("we", "our", or "the extension") collects, uses, and protects your information when you use our browser extension. We are committed to ensuring that your privacy is protected and that you understand how your data is handled.</p>
-                    <p>By using the Reader Mode Browser Extension, you agree to the data practices described in this policy.</p>
+                    <p>This Privacy Policy explains how the Reader Mode Browser Extension ("we", "our", or "the
+                        extension") collects, uses, and protects your information when you use our browser extension. We
+                        are committed to ensuring that your privacy is protected and that you understand how your data
+                        is handled.</p>
+                    <p>Our extension uses Google's Gemini 2.0 Flash Lite AI model to enhance content extraction, which
+                        involves
+                        sending webpage content to our backend server for processing. This policy explains how we handle
+                        this
+                        data and protect your privacy.</p>
+                    <p>By using the Reader Mode Browser Extension, you agree to the data practices described in this
+                        policy.</p>
                 </div>
             </div>
-            
+
             <div class="privacy-section">
                 <h2 class="section-title">Required Permissions</h2>
                 <div class="section-content">
-                    <p>Our extension requires certain permissions to function properly. Here's why each permission is necessary:</p>
+                    <p>Our extension requires certain permissions to function properly. Here's why each permission is
+                        necessary:</p>
                     <ul>
-                        <li><strong>activeTab</strong>: Allows the extension to access the currently active tab. This is necessary to extract and process the content of the webpage you're viewing for reader mode.</li>
-                        <li><strong>scripting</strong>: Enables the extension to execute scripts on the active tab to extract content and apply reader mode transformations.</li>
-                        <li><strong>storage</strong>: Allows the extension to store your preferences (like font size, theme choice) and temporarily store extracted content between page loads.</li>
-                        <li><strong>contextMenus</strong>: Enables the right-click menu option for reading selected text aloud.</li>
-                        <li><strong>host permissions</strong> (<code>&lt;all_urls&gt;</code>): Allows the extension to work on any website you visit. This is necessary for the reader mode functionality to be available across the web.</li>
+                        <li><strong>activeTab</strong>: Allows the extension to access the currently active tab. This is
+                            necessary to extract and process the content of the webpage you're viewing for reader mode.
+                        </li>
+                        <li><strong>scripting</strong>: Enables the extension to execute scripts on the active tab to
+                            extract content and apply reader mode transformations.</li>
+                        <li><strong>storage</strong>: Allows the extension to store your preferences (like font size,
+                            theme choice) and temporarily store extracted content between page loads.</li>
+                        <li><strong>contextMenus</strong>: Enables the right-click menu option for reading selected text
+                            aloud.</li>
+                        <li><strong>host permissions</strong> (<code>&lt;all_urls&gt;</code>): Allows the extension to
+                            work on any website you visit. This is necessary for the reader mode functionality to be
+                            available across the web.</li>
                     </ul>
                 </div>
             </div>
-            
+
             <div class="privacy-section">
                 <h2 class="section-title">Information We Collect</h2>
                 <div class="section-content">
                     <p>The Reader Mode Browser Extension collects and processes the following information:</p>
                     <ul>
-                        <li><strong>User Preferences</strong>: We store your preferences such as font size, font family, and theme choice (light/dark mode) to provide a consistent experience.</li>
-                        <li><strong>Temporary Content Data</strong>: When you activate reader mode, we temporarily extract and process the content of the webpage you're viewing. This data is stored in your browser's local storage and is not transmitted to any external servers.</li>
+                        <li><strong>User Preferences</strong>: We store your preferences such as font size, font family,
+                            and theme choice (light/dark mode) to provide a consistent experience.</li>
+                        <li><strong>Temporary Content Data</strong>: When you activate reader mode, we temporarily
+                            extract and process the content of the webpage you're viewing. This data is stored in your
+                            browser's local storage.</li>
+                        <li><strong>Webpage Content for AI Processing</strong>: When using the Gemini AI-powered
+                            extraction feature,
+                            the HTML content of the webpage you're viewing is sent to our backend server for processing
+                            by the
+                            Gemini 2.0 Flash Lite model. This content is processed in real-time and is not permanently
+                            stored on our servers.</li>
                     </ul>
-                    
+
                     <p><strong>What We DO NOT Collect:</strong></p>
                     <ul>
                         <li>Personal identification information</li>
@@ -280,85 +310,123 @@
                     </ul>
                 </div>
             </div>
-            
+
             <div class="privacy-section">
                 <h2 class="section-title">How We Use Your Information</h2>
                 <div class="section-content">
-                    <p>The information we collect is used solely to provide and improve the Reader Mode functionality:</p>
+                    <p>The information we collect is used solely to provide and improve the Reader Mode functionality:
+                    </p>
                     <ul>
-                        <li>User preferences are used to customize your reading experience according to your choices.</li>
+                        <li>User preferences are used to customize your reading experience according to your choices.
+                        </li>
                         <li>Temporary content data is used to transform the webpage into reader mode format.</li>
-                        <li>For the text-to-speech feature, we process the text content to be read aloud using your browser's built-in Web Speech API.</li>
+                        <li>For the text-to-speech feature, we process the text content to be read aloud using your
+                            browser's built-in Web Speech API.</li>
+                        <li>Webpage content sent to our backend is processed by the Gemini 2.0 Flash Lite model to
+                            extract
+                            the main article content with higher accuracy than traditional methods. This processed
+                            content
+                            is then returned to your browser for display in reader mode.</li>
                     </ul>
-                    <p><strong>We do not sell, trade, or otherwise transfer your information to outside parties.</strong> All processing happens locally within your browser.</p>
+                    <p><strong>We do not sell, trade, or otherwise transfer your information to outside
+                            parties.</strong> While webpage content is sent to our backend server for AI processing,
+                        this data is only used for the specific purpose of content extraction and is not stored
+                        permanently, shared with third parties, or used for any other purpose.</p>
                 </div>
             </div>
-            
+
             <div class="privacy-section">
                 <h2 class="section-title">Data Storage & Security</h2>
                 <div class="section-content">
-                    <p>All data collected by the Reader Mode Browser Extension is stored locally on your device using the browser's built-in storage mechanisms:</p>
+                    <p>The Reader Mode Browser Extension handles data in the following ways:</p>
                     <ul>
-                        <li>User preferences are stored in the browser's local storage.</li>
-                        <li>Temporary content data is stored in the browser's session storage and is cleared when you close the tab or navigate away.</li>
+                        <li>User preferences are stored locally on your device using the browser's local storage.</li>
+                        <li>Temporary content data is stored in the browser's session storage and is cleared when you
+                            close the tab or navigate away.</li>
+                        <li>When using the AI-powered extraction feature, webpage content is temporarily transmitted to
+                            our
+                            backend server over a secure HTTPS connection for processing by the Gemini 2.0 Flash Lite
+                            model.</li>
                     </ul>
-                    <p>No data is transmitted to external servers, and all processing happens locally within your browser. This means your data remains on your device and is subject to your browser's security measures.</p>
+                    <p>For data transmitted to our backend server:</p>
+                    <ul>
+                        <li>All communication is encrypted using industry-standard TLS/SSL protocols.</li>
+                        <li>Content is processed in real-time and is not permanently stored.</li>
+                        <li>No logs containing webpage content are kept beyond what is necessary for debugging and
+                            improving the service.</li>
+                        <li>Our backend servers implement security best practices to protect your data during
+                            processing.</li>
+                    </ul>
                 </div>
             </div>
-            
+
             <div class="privacy-section">
                 <h2 class="section-title">Third-Party Services</h2>
                 <div class="section-content">
                     <p>The Reader Mode Browser Extension uses the following third-party services:</p>
                     <ul>
-                        <li><strong>Mozilla's Readability.js</strong>: We use this open-source library to extract and clean article content. This processing happens entirely within your browser.</li>
-                        <li><strong>Web Speech API</strong>: For the text-to-speech feature, we use your browser's built-in Web Speech API. The processing of speech synthesis happens locally on your device.</li>
+                        <li><strong>Mozilla's Readability.js</strong>: We use this open-source library to extract and
+                            clean article content. This processing happens entirely within your browser.</li>
+                        <li><strong>Web Speech API</strong>: For the text-to-speech feature, we use your browser's
+                            built-in Web Speech API. The processing of speech synthesis happens locally on your device.
+                        </li>
                     </ul>
-                    <p>These services do not receive any data from our extension; all processing happens locally within your browser.</p>
+                    <p>These services do not receive any data from our extension; all processing happens locally within
+                        your browser.</p>
                 </div>
             </div>
-            
+
             <div class="privacy-section">
                 <h2 class="section-title">User Rights</h2>
                 <div class="section-content">
                     <p>As a user of the Reader Mode Browser Extension, you have the right to:</p>
                     <ul>
-                        <li><strong>Access</strong>: View the data stored by the extension in your browser's local storage.</li>
-                        <li><strong>Modify</strong>: Change your preferences at any time through the extension's interface.</li>
-                        <li><strong>Delete</strong>: Clear all stored data by resetting the extension or uninstalling it from your browser.</li>
+                        <li><strong>Access</strong>: View the data stored by the extension in your browser's local
+                            storage.</li>
+                        <li><strong>Modify</strong>: Change your preferences at any time through the extension's
+                            interface.</li>
+                        <li><strong>Delete</strong>: Clear all stored data by resetting the extension or uninstalling it
+                            from your browser.</li>
                     </ul>
                     <p>Since all data is stored locally on your device, you have complete control over it.</p>
                 </div>
             </div>
-            
+
             <div class="privacy-section">
                 <h2 class="section-title">Changes to This Privacy Policy</h2>
                 <div class="section-content">
-                    <p>We may update our Privacy Policy from time to time. We will notify you of any changes by updating the "Last Updated" date at the top of this Privacy Policy.</p>
-                    <p>You are advised to review this Privacy Policy periodically for any changes. Changes to this Privacy Policy are effective when they are posted on this page.</p>
+                    <p>We may update our Privacy Policy from time to time. We will notify you of any changes by updating
+                        the "Last Updated" date at the top of this Privacy Policy.</p>
+                    <p>You are advised to review this Privacy Policy periodically for any changes. Changes to this
+                        Privacy Policy are effective when they are posted on this page.</p>
                 </div>
             </div>
-            
+
             <div class="privacy-section">
                 <h2 class="section-title">Contact Information</h2>
                 <div class="section-content">
-                    <p>If you have any questions or concerns about this Privacy Policy or the Reader Mode Browser Extension, please contact us:</p>
+                    <p>If you have any questions or concerns about this Privacy Policy or the Reader Mode Browser
+                        Extension, please contact us:</p>
                     <ul>
-                        <li>By opening an issue on our <a href="https://github.com/chirag127/Reader-Mode-Browser-Extension/issues" target="_blank">GitHub repository</a></li>
+                        <li>By opening an issue on our <a
+                                href="https://github.com/chirag127/Reader-Mode-Browser-Extension/issues"
+                                target="_blank">GitHub repository</a></li>
                     </ul>
                 </div>
             </div>
         </div>
     </main>
-    
+
     <footer>
         <div class="container">
             <div class="footer-links">
                 <a href="index.html">Home</a>
-                <a href="https://github.com/chirag127/Reader-Mode-Browser-Extension" target="_blank">GitHub Repository</a>
+                <a href="https://github.com/chirag127/Reader-Mode-Browser-Extension" target="_blank">GitHub
+                    Repository</a>
             </div>
             <p class="copyright">&copy; 2023 Reader Mode Browser Extension. All rights reserved.</p>
         </div>
     </footer>
 </body>
+
 </html>
